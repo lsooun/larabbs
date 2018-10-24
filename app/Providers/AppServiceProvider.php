@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Category;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
 
         //
         \Carbon\Carbon::setLocale('zh');
+
+        \View::share('categories', Category::all());
     }
 
     /**
