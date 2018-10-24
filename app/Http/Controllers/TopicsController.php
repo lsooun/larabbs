@@ -16,7 +16,15 @@ class TopicsController extends Controller
 
 	public function index()
 	{
-		$topics = Topic::paginate();
+		$topics = Topic::select('id', 'user_id', 'category_id', 'title', 'reply_count', 'updated_at')
+            ->with([
+                'category' => function ($query) {
+                    return $query->select('id', 'name');
+                },
+                'user' => function ($query) {
+                    return $query->select('id', 'name', 'avatar');
+                }
+            ])->paginate(30);
 		return view('topics.index', compact('topics'));
 	}
 
