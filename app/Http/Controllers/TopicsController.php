@@ -14,7 +14,7 @@ class TopicsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index()
+	public function index(Request $request)
 	{
 		$topics = Topic::select('id', 'user_id', 'category_id', 'title', 'reply_count', 'updated_at')
             ->with([
@@ -24,7 +24,9 @@ class TopicsController extends Controller
                 'user' => function ($query) {
                     return $query->select('id', 'name', 'avatar');
                 }
-            ])->paginate(30);
+            ])
+            ->withOrder($request->order)
+            ->paginate(30);
 		return view('topics.index', compact('topics'));
 	}
 
