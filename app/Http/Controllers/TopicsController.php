@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Handlers\ImageUploadHandler;
 use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\TopicRequest;
 use Auth;
@@ -28,6 +29,7 @@ class TopicsController extends Controller
             ])
             ->withOrder($request->order)
             ->paginate(30);
+
 		return view('topics.index', compact('topics'));
 	}
 

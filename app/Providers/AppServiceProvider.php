@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\Category;
+use App\Models\{User, Category};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,11 @@ class AppServiceProvider extends ServiceProvider
         //
         \Carbon\Carbon::setLocale('zh');
 
-        \View::share('categories', Category::all());
+        \View::share([
+            'categories' => Category::all(),
+            'active_users' => app(User::class)->getActiveUsers(),
+        ]);
+
     }
 
     /**
